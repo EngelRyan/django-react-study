@@ -1,0 +1,27 @@
+{
+  "name": "django-react-study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"blue,green\" \"npm run frontend\" \"npm run backend\"",
+    "frontend": "npm run dev --prefix frontend",
+    "backend": "cd backend && python manage.py runserver",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EngelRyan/django-react-study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/EngelRyan/django-react-study/issues"
+  },
+  "homepage": "https://github.com/EngelRyan/django-react-study#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.4"
+  }
+}
