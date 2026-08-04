@@ -1,0 +1,32 @@
+{
+  "name": "django-react-study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+   "scripts": {
+    "dev": "node scripts/dev.js",
+    "setup": "node scripts/setup.js",
+    "migrations": "cd backend && python manage.py makemigrations && python manage.py migrate",
+
+    "dev:setup": "node scripts/dev.js --setup",
+    "dev:migrate": "node scripts/dev.js --m",
+
+    "frontend": "npm run dev --prefix frontend",
+    "backend": "cd backend && python manage.py runserver"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EngelRyan/django-react-study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/EngelRyan/django-react-study/issues"
+  },
+  "homepage": "https://github.com/EngelRyan/django-react-study#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.4"
+  }
+}

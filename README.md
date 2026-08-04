@@ -13,12 +13,20 @@ O objetivo deste projeto e praticar a criacao de APIs com Django, Django REST Fr
 - CORS: django-cors-headers
 - Frontend: React + Vite
 - HTTP client: Axios
+- Gerenciamento dos scripts: npm + concurrently
 
 ## Estrutura do projeto
 
 ```text
-backend/
-frontend/
+django-react-study/
+│
+├── backend/
+│
+├── frontend/
+│
+├── scripts/
+│
+└── package.json
 ```
 
 ## Requisitos
@@ -37,88 +45,117 @@ git clone https://github.com/EngelRyan/django-react-study
 cd django-react-study
 ```
 
-### 2. Configurar o backend
+### 2. Configurar o ambiente
 
-Crie e ative um ambiente virtual no Windows.
+O projeto possui scripts automatizados para configurar dependencias, migrations e inicializar as aplicacoes.
 
-PowerShell:
-
-```powershell
-cd backend
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
-
-CMD:
-
-```cmd
-cd backend
-python -m venv .venv
-.\.venv\Scripts\activate.bat
-```
-
-Instale as dependencias do backend:
+Para a primeira execucao, utilize:
 
 ```bash
-pip install -r requirements.txt
+npm run dev:setup
 ```
 
-Aplique as migracoes:
+Esse comando realiza:
 
-```bash
-python manage.py migrate
-```
+- Instalacao das dependencias do frontend;
+- Instalacao das dependencias do backend;
+- Aplicacao das migrations existentes;
+- Inicializacao do backend Django e frontend React.
 
-Suba o servidor do Django:
+## Como rodar o projeto
 
-```bash
-python manage.py runserver
-```
+### Execucao normal
 
-O backend normalmente vai ficar em:
-
-```text
-http://127.0.0.1:8000/
-```
-
-### 3. Configurar o frontend
-
-Em outro terminal:
-
-```bash
-cd frontend
-npm install
-```
-
-Se quiser instalar apenas a dependencia principal ja usada para chamadas HTTP:
-
-```bash
-npm install axios
-```
-
-Suba o frontend Vite:
+Após o ambiente estar configurado:
 
 ```bash
 npm run dev
 ```
 
-O frontend normalmente vai ficar em:
+Esse comando inicia simultaneamente:
+
+Backend Django:
+
+```text
+http://127.0.0.1:8000/
+```
+
+Frontend React/Vite:
 
 ```text
 http://localhost:5173/
 ```
 
-## Como rodar o projeto completo
+Os logs das aplicacoes serao identificados no terminal como:
 
-1. Inicie o backend com `python manage.py runserver` dentro da pasta `backend`.
-2. Inicie o frontend com `npm run dev` dentro da pasta `frontend`.
-3. Acesse o frontend no navegador e faça as chamadas para a API do Django.
+```text
+[BACKEND]
+[FRONTEND]
+```
+
+## Scripts disponiveis
+
+### Iniciar o projeto
+
+```bash
+npm run dev
+```
+
+Inicia o backend e frontend simultaneamente.
+
+---
+
+### Configurar o projeto e iniciar
+
+```bash
+npm run dev:setup
+```
+
+Executa o setup completo antes de iniciar as aplicacoes:
+
+- `npm install` do frontend;
+- `pip install` das dependencias do backend;
+- migrations;
+- inicializacao dos servidores.
+
+---
+
+### Rodar migrations e iniciar
+
+```bash
+npm run dev:migrate
+```
+
+Utilizado quando houver alteracoes nos models do Django.
+
+Executa:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+e depois inicia o backend e frontend.
+
+---
+
+### Apenas configurar o ambiente
+
+```bash
+npm run setup
+```
+
+Executa apenas a preparacao do ambiente, sem iniciar os servidores.
 
 ## Dependencias instaladas
 
 ### Backend
 
-As dependencias principais estao em [backend/requirements.txt](backend/requirements.txt).
+As dependencias principais estao em:
+
+[backend/requirements.txt](backend/requirements.txt)
+
+Principais dependencias:
 
 - Django
 - Django REST Framework
@@ -127,12 +164,45 @@ As dependencias principais estao em [backend/requirements.txt](backend/requireme
 
 ### Frontend
 
-As dependencias principais estao em [frontend/package.json](frontend/package.json).
+As dependencias principais estao em:
+
+[frontend/package.json](frontend/package.json)
+
+Principais dependencias:
 
 - react
 - react-dom
 - axios
 - vite
+
+### Raiz do projeto
+
+O `package.json` da raiz controla os scripts de execucao.
+
+Dependencia principal:
+
+- concurrently
+
+## Observacao sobre erro do Rolldown
+
+Em alguns ambientes Windows, pode ocorrer um erro relacionado ao `rolldown`, como:
+
+```text
+Cannot find native binding
+Cannot find module '@rolldown/binding-win32-x64-msvc'
+```
+
+Caso isso aconteca, execute dentro da pasta `frontend`:
+
+```bash
+npm install @rolldown/binding-win32-x64-msvc --save-dev
+```
+
+Depois volte para a raiz do projeto e execute novamente:
+
+```bash
+npm run dev
+```
 
 ## Git basics
 
@@ -148,7 +218,7 @@ git branch
 git checkout -b minha-branch
 ```
 
-### Se já tiver uma branch apenas
+### Se ja tiver uma branch apenas
 
 ```bash
 git checkout minha-branch
@@ -195,10 +265,11 @@ git pull origin main
 
 1. Atualize a `main` local.
 2. Crie uma branch de trabalho.
-3. Faça suas alteracoes.
-4. Suba o projeto para validar.
-5. Faça commit e push da branch.
-6. Abra o PR da sua branch para a `main`.
+3. Faca suas alteracoes.
+4. Execute `npm run dev` para validar o projeto.
+5. Caso altere models Django, execute `npm run dev:migrate`.
+6. Faca commit e push da branch.
+7. Abra o PR da sua branch para a `main`.
 
 ## Observacao sobre CORS
 
