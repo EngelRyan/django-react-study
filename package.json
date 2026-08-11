@@ -5,16 +5,16 @@
   "main": "index.js",
   "scripts": {
     "dev": "node scripts/dev.js",
-    "client": "npm run dev --prefix client",
-    "server": "cd server && python manage.py runserver",
+    "frontend": "npm run dev --prefix frontend",
+    "backend": "cd backend && python manage.py runserver",
     "prepare": "husky"
   },
   "lint-staged": {
-    "client/**/*.{js,jsx,ts,tsx}": [
+    "frontend/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
     ],
-    "server/**/*.py": [
+    "backend/**/*.py": [
       "ruff check --fix",
       "ruff format"
     ]
